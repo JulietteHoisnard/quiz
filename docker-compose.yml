@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  database:
+    image: "postgres" # use latest official postgres version
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_USER: ${USER}
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    volumes:
+      - ${PWD}/db:${PWD}/db # persist data even if container shuts downvolumes:
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${USER}"]
+    container_name: quiz_postgres
